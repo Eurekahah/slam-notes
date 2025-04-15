@@ -112,10 +112,6 @@ roscore & rosrun maplab_console maplab_console
 
 退出控制台`q`or`exit`
 
-#### 地图管理
-
-地图的创建，加载，批加载，保存，批量保存，可视化
-
 #### 基本命令
 
 这里是进入控制台后的操作
@@ -125,10 +121,105 @@ roscore & rosrun maplab_console maplab_console
 3. 加载地图`load`，保存地图`save`，查看已加载的地图列表`ls`，地图数据查看`ms`即`map_statistics`。其他查看https://maplab.asl.ethz.ch/docs/master/pages/tutorials-maplab/basics/C_Console-map-management.html
 4. 地图可视化`v`，在加载地图后使用，使用命令之后可以打开`rviz`查看相应的话题。
 5. `lc`即loop closure，使用后可以在可视化界面查看相应话题，以及终端的输出信息。
-6. `relax`去除一些偏差较大的回环边
-7. 
+6. `relax`去除一些偏差较大的回环边，重点是找到vi边和lc边之间的一个平衡。
+7. VIOmap优化：
+   - `rtl`重新三角化路标点
+   - `kfh`基于启发的关键帧，去除一些点，合并邻边
+   - `optv`和`optvi`，用于BA
+8. 回环过程：针对多个missions首先进行地图锚定`aam`命令，单个则不用。然后进行posegraph的relaxation，以及full batch optimization。https://maplab.asl.ethz.ch/docs/master/pages/tutorials-maplab/basics/F_Understanding-loop-closure.html
+9. 多任务建图:
+   `sbk`设置一个任务的坐标为已知。
+   `print_baseframes`查看每个任务的坐标信息
 
-### 实验一
+### 稠密重建
+
+1. 附加图片到地图
+   修改tutorial_euroc_live如下，注意不要直接注释，保存图像为resources设置为true
+   
+   ```bash
+   LOCALIZATION_MAP_OUTPUT=$1
+   # NCAMERA_CALIBRATION="$ROVIO_CONFIG_DIR/ncamera-euroc.yaml"
+   NCAMERA_CALIBRATION="$ROVIO_CONFIG_DIR/euroc-stereo.yaml"
+   IMU_PARAMETERS_MAPLAB="$ROVIO_CONFIG_DIR/imu-adis16488.yaml"
+   REST=$@
+   
+   rosrun rovioli rovioli \
+     --alsologtostderr=1 \
+     --v=2 \
+     --sensor_calibration_file=$NCAMERA_CALIBRATION \
+     --datasource_type="rostopic" \
+     --save_map_folder="$LOCALIZATION_MAP_OUTPUT" \
+     --map_builder_save_image_as_resources=true \
+     --optimize_map_to_localization_map=false \
+     $REST
+   ```
+
+   修改运行该命令`rosrun rovioli tutorial_euroc_live /path/to/save/map` 并播放euroc的数据集。播放完毕后，Ctrl+C将会进行地图保存。
+   
+   <img src="./assets/image-20250414193529707.png" alt="image-20250414193529707" style="zoom:67%;" />
+   
+2. 双目深度重建
+   将刚刚的地图在maplab_console中加载，按照如下进行优化
+
+   参考https://maplab.asl.ethz.ch/docs/master/pages/tutorials-maplab/use-cases/C_Stereo-Dense-Reconstruction.html
+   
+   `sdr --flagfile ~/code/maplab/src/maplab/algorithms/dense-reconstruction/stereo-dense-reconstruction/parameter/stereo_params.gflags `
+   
+3. 效果
+
+   <img src="./assets/image-20250414230109162.png" alt="image-20250414230109162" style="zoom:67%;" />
+   
+   使用meshlab打开保存的ply地图
+   ![image-20250414233234832](./assets/image-20250414233234832.png)
+
+### fastlio2+maplab
+
+1. 按照另一个文档配置fastlio2
+2. 运行maplab后端，命令`roslaunch maplab_launch stick-maplab-node-2022.launch`，这里使用2022，因为对应的config文件里刚好是对应的话题。
+3. 效果
+
+![image-20250414192555958](./assets/image-20250414192555958.png)
+
+### 多机通信
+
+1. 手机热点设置：开启手机热点或者连TJ-WIFI
+2. 两台电脑连接到同一热点，查看两台电脑的IP地址(使用`ifconfig`或`ip addr`命令)
+3. 选择一台电脑作为ROS Master(例如运行maplab的电脑)，假设该电脑IP为192.168.43.100
+4. **在两台电脑上设置ROS环境变量**：
+
+在maplab电脑(ROS Master)上:
+
+```bash
+export ROS_MASTER_URI=http://192.168.43.100:11311
+export ROS_IP=192.168.43.100
+```
+
+在FAST-LIO2电脑上:
+
+```bash
+export ROS_MASTER_URI=http://192.168.43.100:11311
+export ROS_IP=192.168.43.200  # 替换为该电脑的实际IP
+```
+
+5. **测试连接**：在子电脑上运行`rostopic list`，检查是否能看到话题列表
+6. 在master电脑上启动maplab：
+
+```bash
+roslaunch maplab_launch stick-maplab-node-2022.launch
+```
+
+7. 在另一台电脑上启动FAST-LIO2：
+
+```bash
+roslaunch fast_lio mapping_hesai.launch
+```
+
+8. 播放数据流![image-20250414215151857](./assets/image-20250414215151857.png)
+9. 效果
+   - 相当卡，在正常速度下后端几乎优化不出什么，提高发布速度勉强有轨迹
+   - 前端基本没问题
+
+### maplab-server实验
 
 参考https://maplab.asl.ethz.ch/docs/master/pages/tutorials-maplab-server/B_Euroc_Experiment.html
 

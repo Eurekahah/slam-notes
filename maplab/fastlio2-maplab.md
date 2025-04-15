@@ -42,7 +42,7 @@ https://github.com/smauq/fast_lio/
                  /tf_static                        1 msg     : tf2_msgs/TFMessage
    ```
 
-   我们运行maplab后端用到的topic需要点云和imu信息需要用到`/alphasense/imu`和`/os_cloud_node/points`，最终播放用到的命令是`rosbag play ~/bags/IC_Office_1.bag /os_cloud_node/points:=/hesai/pandar`这里进行了一下话题映射。
+   我们运行maplab后端用到的topic需要点云和imu信息需要用到`/alphasense/imu`和`/os_cloud_node/points`，最终播放用到的命令是`rosbag play ~/bags/IC_Office_1.bag /os_cloud_node/points:=/hesai/pandar`这里进行了一下话题映射。（这是我播放2021使用的，播放2022的直接播放就行）
 
 4. 运行FastLio2前端，命令如下
 
