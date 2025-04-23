@@ -4,6 +4,34 @@ https://blog.csdn.net/Jenniehubby/article/details/134780066
 
 https://gaoyichao.com/Xiaotu/
 
+录制数据
+```bash
+rosbag record /velodyne_points /tf /tf_static /clock
+```
+
+操控小车
+~~~bash
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+~~~
+
+启动仿真
+~~~bash
+roslaunch lidar_car_pkg lidar_car.launch
+~~~
+
+启动识别
+```bash
+roslaunch openpcdet 3d_object_detector.launch 
+```
+
+启动算法
+
+```bash
+roslaunch lego_loam run.launch
+```
+
+
+
 # 安装
 
 1. 由于我下载的ROS已经自带了gazebo了，故不用再下载，输入`gazebo`命令，可以启动gazebo。
