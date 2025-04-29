@@ -172,3 +172,11 @@ cd /media/eureka/Solid\ Disk/datasets/bags/
 前端：aloam
 
 ![image-20250429090514180](./assets/image-20250429090514180.png)
+
+数据集：mr_slam提供的数据集loop_22.bag,loop_30.bag,loop_31.bag
+
+回环：RING++ icp threshold=0.2
+
+前端：aloam
+
+![image-20250429092841159](./assets/image-20250429092841159.png)
