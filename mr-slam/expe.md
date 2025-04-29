@@ -71,9 +71,11 @@ python main_RINGplusplus.py
 
 
 
-
+rostopic pub /map_saving std_msgs/Bool "data: true" -1
 
 存储地图
+
+
 
 rosbag play loop-2.bag /livox/imu:=/robot_1/imu /livox/lidar:=/robot_1/pointcloud --clock --pause 
 rosbag play loop-3.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud --clock --pause
@@ -85,7 +87,7 @@ rosbag play loop-4.bag /livox/imu:=/robot_3/imu /livox/lidar:=/robot_3/pointclou
 rosbag play robot_1.bag /livox/imu:=/robot_1/imu /livox/lidar:=/robot_1/pointcloud --clock --pause 
 rosbag play robot_2.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud --clock --pause
 
-
+rosbag play robot_3.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud --clock --pause
 
 
 
@@ -145,3 +147,28 @@ cd /media/eureka/Solid\ Disk/datasets/bags/
 
 
 
+## 2
+
+数据集：mr_slam提供的数据集loop_22.bag,loop_30.bag,loop_31.bag
+
+回环：ScanContext icp threshold=0.13
+
+前端：aloam
+
+![image-20250429085755633](./assets/image-20250429085755633.png)
+
+数据集：mr_slam提供的数据集loop_22.bag,loop_30.bag,loop_31.bag
+
+回环：RING++ icp threshold=0.15
+
+前端：aloam
+
+![image-20250429091151579](./assets/image-20250429091151579.png)
+
+数据集：mr_slam提供的数据集loop_22.bag,loop_30.bag,loop_31.bag
+
+回环：RING icp threshold=0.13
+
+前端：aloam
+
+![image-20250429090514180](./assets/image-20250429090514180.png)
