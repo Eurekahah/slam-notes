@@ -1,36 +1,20 @@
 # 目标识别
 
-2D-3D
+OpenPCDet：一个开源的目标识别框架，集合了众多目标识别算法，包括PointPillars，PointRCNN，并且有相应的预训练模型，在此基础上将其与ROS进行结合。
 
-1. 3D-BoundingBox + YOLO
+官方项目地址：https://github.com/open-mmlab/OpenPCDet
 
-3D
+ROS结合版本：https://github.com/Kin-Zhang/OpenPCDet_ros
 
-1. PointRCNN
-2. PointPillars
-3. Complex-YOLO
-4. SECOND
+数据集：KITTI：https://www.cvlibs.net/datasets/kitti/raw_data.php
 
-要求：大致查看每种方案，至少实现其中一种方案的演示demo，目前不要求可以与ROS集成
+> 使用KITTI数据集是raw模式，转换为bag数据播放需要使用官方提供的kitti2bag模块，使用pip install kitti2bag即可，参考https://blog.csdn.net/m0_45388819/article/details/108582312
 
-# 仿真搭建
+以及我自行使用gazebo录制的数据
 
-1. 构建可用地图城市道路环境，要求：可用的.world文件
-2. 使用turtlebot输出雷达数据到ros系统，要求：使用命令`rostopic list`可查看到
-3. 车辆可以操纵移动，目前可以尽停留在直线移动，未来将开发人工手动移动或者自动寻路
+## 实验
 
-# 多车协作
+模型：pv_rcnn_8369.pth 评分阈值：0.7
 
-1. 搭建基本的通信框架，实现两台机器在lego-loam上的同时建图（可查阅网络可能有现成的co版）
+<img src="./assets/image-20250422202534371.png" alt="image-20250422202534371" style="zoom: 30%;" /><img src="./assets/image-20250422202759560.png" alt="image-20250422202759560" style="zoom:30%;" />
 
-   
-
-
-
-模型：pv_rcnn_8369.pth
-
-![image-20250422202534371](./assets/image-20250422202534371.png)
-
-阈值：0.7
-
-![image-20250422202759560](./assets/image-20250422202759560.png)

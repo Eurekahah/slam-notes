@@ -110,9 +110,9 @@ cd /media/eureka/Solid\ Disk/datasets/bags/
 ~~~
 
 ~~~bash
-rosbag play loop-2.bag /livox/imu:=/robot_1/imu /livox/lidar:=/robot_1/pointcloud --clock --pause -r 0.5
-rosbag play loop-3.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud --clock --pause -r 0.5
-rosbag play loop-4.bag /livox/imu:=/robot_3/imu /livox/lidar:=/robot_3/pointcloud --clock --pause -r 0.5
+rosbag play loop-22.bag /livox/imu:=/robot_1/imu /livox/lidar:=/robot_1/pointcloud --clock --pause -r 0.5
+rosbag play loop-30.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud --clock --pause -r 0.5
+rosbag play loop-31.bag /livox/imu:=/robot_3/imu /livox/lidar:=/robot_3/pointcloud --clock --pause -r 0.5
 ~~~
 
 ~~~bash
@@ -120,6 +120,19 @@ rosbag play robot_1.bag /livox/imu:=/robot_1/imu /livox/lidar:=/robot_1/pointclo
 rosbag play robot_2.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud --clock --pause -r 0.5
 rosbag play robot_3.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud --clock --pause -r 0.5
 ~~~
+
+~~~bash
+rosbag play gazebo10.bag --clock --pause /velodyne_points:=/robot_1/pointcloud -r 0.5
+rosbag play gazebo11.bag --clock --pause /velodyne_points:=/robot_2/pointcloud -r 0.5
+
+rosbag play gazebo12.bag --clock --pause /velodyne_points:=/robot_1/pointcloud -r 0.5
+rosbag play gazebo13.bag --clock --pause /velodyne_points:=/robot_2/pointcloud -r 0.5
+
+~~~
+
+
+
+
 
 存储地图话题发布
 
@@ -211,7 +224,7 @@ pcl_viewer <path_to_pcd_file>
 
 ![image-20250429092841159](./assets/image-20250429092841159.png)
 
-## 实验三
+## 3 项目给定数据集
 
 这个实验前端为fastlio，回环采用了RING
 
@@ -230,3 +243,130 @@ pcl_viewer <path_to_pcd_file>
 0.5 rate 0.13 th
 
 ![image-20250507200451657](./assets/image-20250507200451657.png)
+
+
+
+### 4 单机器人
+
+robot_1.bag 0.5 rate submap_voxel_size=0.2 global_voxel_size=0.5
+
+50s
+
+![image-20250508143443827](./assets/image-20250508143443827.png)
+
+100s
+
+![image-20250508143627820](./assets/image-20250508143627820.png)
+
+150s
+
+![image-20250508143752908](./assets/image-20250508143752908.png)
+
+robot_1.bag 0.5 rate submap_voxel_size=0.3 global_voxel_size=0.8
+
+50s
+
+![image-20250508144211988](./assets/image-20250508144211988.png)
+
+100s
+
+![image-20250508144343711](./assets/image-20250508144343711.png)
+
+140s
+
+![image-20250508144503230](./assets/image-20250508144503230.png)
+
+robot_1.bag 0.5 rate submap_voxel_size=0.1 global_voxel_size=0.3
+
+50s
+
+![image-20250508144905536](./assets/image-20250508144905536.png)
+
+100s
+
+![image-20250508145041812](./assets/image-20250508145041812.png)
+
+130s
+
+![image-20250508145132693](./assets/image-20250508145132693.png)
+
+### 5 两个机器人
+
+robot_1.bag+robot_2.bag 0.5 rate 
+
+submap_voxel_size=0.1 global_voxel_size=0.3 RING icp_th=0.13
+
+filter_size_surf=1.0 filter_size_map=1.0
+
+50s
+
+![image-20250508145423652](./assets/image-20250508145423652.png)
+
+100s
+
+![image-20250508145610981](./assets/image-20250508145610981.png)
+
+150s
+
+![image-20250508145803280](./assets/image-20250508145803280.png)
+
+200s
+
+![image-20250508145929827](./assets/image-20250508145929827.png)
+
+### 6 两个机器人
+
+robot_1.bag+robot_3.bag 0.5 rate submap_voxel_size=0.1 global_voxel_size=0.3 RING icp_th=0.13
+
+40s
+
+![image-20250508223327036](./assets/image-20250508223327036.png)
+
+100s
+
+![image-20250508223440444](./assets/image-20250508223440444.png)
+
+### 7 两个机器人
+
+robot_2.bag+robot_3.bag 0.5 rate submap_voxel_size=0.1 global_voxel_size=0.3 RING icp_th=0.13
+
+### 8 三机器人
+
+robot_1.bag+robot_2.bag+robot_3.bag 0.5 rate submap_voxel_size=0.1 global_voxel_size=0.3 RING icp_th=0.13
+
+50s
+
+![image-20250508155143081](./assets/image-20250508155143081.png)
+
+
+
+### gazebo仿真
+
+![image-20250514143832137](./assets/image-20250514143832137.png)
+
+单机器人aloam前端
+
+![image-20250514004732876](./assets/image-20250514004732876.png)
+
+
+
+
+
+![image-20250514010128636](./assets/image-20250514010128636.png)
+
+![image-20250514010205391](./assets/image-20250514010205391.png)
+
+![image-20250514010251759](./assets/image-20250514010251759.png)
+
+![image-20250514011332417](./assets/image-20250514011332417.png)
+
+
+
+
+
+![image-20250514020924170](./assets/image-20250514020924170.png)
+
+![image-20250514021403539](./assets/image-20250514021403539.png)
+
+![image-20250514021434437](./assets/image-20250514021434437.png)
+

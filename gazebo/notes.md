@@ -6,7 +6,7 @@ https://gaoyichao.com/Xiaotu/
 
 录制数据
 ```bash
-rosbag record /velodyne_points /tf /tf_static /clock
+rosbag record /velodyne_points /tf /clock /imu -j --buffsize=512
 ```
 
 操控小车
@@ -48,6 +48,13 @@ roslaunch lego_loam run.launch
    ~~~bash
    sudo cp -r ~/.gazebo/gazebo_models/* /usr/share/gazebo-11/models
    ~~~
+   
+4. 安装插件库
+   ~~~bash
+   sudo apt install ros-noetic-gazebo-plugins
+   ~~~
+
+   检查`/opt/ros/noetic/lib`下搜索gazebo可以搜到相应的包。
 
 
 
@@ -201,6 +208,43 @@ https://blog.csdn.net/lc1852109/category_11946504.html
 6. 多线雷达仿真数据导出
    仓库`git clone https://bitbucket.org/DataspeedInc/velodyne_simulator.git`，这个是shit，反正用这不爽
    另一个仓库`https://github.com/lmark1/velodyne_simulator.git`这个用着可以直接编译使用
+
+7. 现在加入imu传感器
+   ~~~bash
+   <plugin name="my_imu" filename="libgazebo_ros_imu_sensor.so">
+             <robotNamespace>/</robotNamespace>
+             <topicName>imu</topicName>
+             <bodyName>link_3</bodyName>
+             <frameName>imu_link</frameName>
+             <updateRateHZ>100.0</updateRateHZ>
+             <gaussianNoise>0.0</gaussianNoise>
+             <xyzOffset>0 0 0</xyzOffset>
+             <rpyOffset>0 0 0</rpyOffset>
+           </plugin>
+   ~~~
+
+   插件使用libgazebo_ros_imu_sensor.so不使用libgazebo_ros_imu.so。
+   我们为车身主体添加imu传感器
+
+8. 加入相机传感器的话题发布
+   ~~~bash
+   <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+               <alwaysOn>true</alwaysOn>
+               <updateRate>30.0</updateRate>
+               <cameraName>camera</cameraName>
+               <imageTopicName>image_raw</imageTopicName>
+               <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+               <frameName>camera_link</frameName>
+               <hackBaseline>0.07</hackBaseline>
+               <distortionK1>0.0</distortionK1>
+               <distortionK2>0.0</distortionK2>
+               <distortionK3>0.0</distortionK3>
+               <distortionT1>0.0</distortionT1>
+               <distortionT2>0.0</distortionT2>
+             </plugin>
+   ~~~
+
+   
 
 ## 多线雷达仿真并输出PointCloud2点云
 
