@@ -118,7 +118,7 @@ rosbag play loop-31.bag /livox/imu:=/robot_3/imu /livox/lidar:=/robot_3/pointclo
 ~~~bash
 rosbag play robot_1.bag /livox/imu:=/robot_1/imu /livox/lidar:=/robot_1/pointcloud --clock --pause -r 0.5
 rosbag play robot_2.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud --clock --pause -r 0.5
-rosbag play robot_3.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud --clock --pause -r 0.5
+rosbag play robot_3.bag /livox/imu:=/robot_3/imu /livox/lidar:=/robot_3/pointcloud --clock --pause -r 0.5
 ~~~
 
 ~~~bash
@@ -244,7 +244,7 @@ pcl_viewer <path_to_pcd_file>
 
 ![image-20250507200451657](./assets/image-20250507200451657.png)
 
-
+![image-20250517232608481](./assets/image-20250517232608481.png)
 
 ### 4 单机器人
 
@@ -338,7 +338,11 @@ robot_1.bag+robot_2.bag+robot_3.bag 0.5 rate submap_voxel_size=0.1 global_voxel_
 
 ![image-20250508155143081](./assets/image-20250508155143081.png)
 
+aloam前端
 
+![image-20250514231448441](./assets/image-20250514231448441.png)
+
+![image-20250514231641179](./assets/image-20250514231641179.png)
 
 ### gazebo仿真
 
