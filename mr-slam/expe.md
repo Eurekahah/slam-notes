@@ -1,3 +1,99 @@
+## 使用
+
+### 运行
+
+运行fastlio前端
+
+```bash
+source devel/setup.bash 
+roslaunch fast_lio 3_robots.launch
+
+roslaunch fast_lio robot_1.launch 
+roslaunch fast_lio robot_2.launch 
+roslaunch fast_lio robot_3.launch 
+
+roslaunch aloam robot_1.launch
+roslaunch aloam robot_2.launch
+roslaunch aloam robot_3.launch
+```
+
+运行后端
+
+~~~bash
+source devel/setup.bash 
+roslaunch global_manager global_manager.launch 
+~~~
+
+运行回环
+
+~~~bash
+source devel/setup.bash 
+source ~/pyvenv/mr_slam_venv/bin/activate
+
+python src/RING_ros/main_SC.py 
+python src/RING_ros/main_RING.py 
+python src/RING_ros/main_RINGplusplus.py 
+~~~
+
+
+播放自制数据集
+
+~~~bash
+cd /media/eureka/Solid\ Disk/datasets/bags/
+~~~
+
+~~~bash
+rosbag play loop-22.bag /livox/imu:=/robot_1/imu /livox/lidar:=/robot_1/pointcloud --clock --pause -r 0.5
+rosbag play loop-30.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud --clock --pause -r 0.5
+rosbag play loop-31.bag /livox/imu:=/robot_3/imu /livox/lidar:=/robot_3/pointcloud --clock --pause -r 0.5
+~~~
+
+~~~bash
+rosbag play robot_1.bag /livox/imu:=/robot_1/imu /livox/lidar:=/robot_1/pointcloud --clock --pause -r 0.5
+rosbag play robot_2.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud --clock --pause -r 0.5
+rosbag play robot_3.bag /livox/imu:=/robot_3/imu /livox/lidar:=/robot_3/pointcloud --clock --pause -r 0.5
+~~~
+
+~~~bash
+rosbag play gazebo10.bag --clock --pause /velodyne_points:=/robot_1/pointcloud -r 0.5
+rosbag play gazebo11.bag --clock --pause /velodyne_points:=/robot_2/pointcloud -r 0.5
+
+rosbag play gazebo12.bag --clock --pause /velodyne_points:=/robot_1/pointcloud -r 0.5
+rosbag play gazebo13.bag --clock --pause /velodyne_points:=/robot_2/pointcloud -r 0.5
+
+rosbag play gazebo20.bag --clock --pause /velodyne_points:=/robot_1/pointcloud -r 0.5
+rosbag play gazebo21.bag --clock --pause /velodyne_points:=/robot_2/pointcloud -r 0.5
+
+~~~
+
+
+
+
+
+存储地图话题发布
+
+~~~bash
+rostopic pub /map_saving std_msgs/Bool "data: true" -1
+~~~
+
+### 检查
+
+rviz中显示.pcd点云的方式
+
+~~~bash
+rosrun pcl_ros pcd_to_pointcloud <path_to_pcd_file> <interval> _frame_id:=<坐标系>
+~~~
+
+~~~bash
+rosrun pcl_ros pcd_to_pointcloud globalMap.pcd 0.1 _frame_id:=map
+~~~
+
+pcl_viewer 查看点云
+
+~~~bash
+pcl_viewer <path_to_pcd_file>
+~~~
+
 # 安装
 
 所需要的库
@@ -66,97 +162,6 @@ cd src/RING_ros
 python main_RING.py
 
 python main_RINGplusplus.py
-
-
-
-## 使用
-
-### 运行
-
-运行fastlio前端
-
-```bash
-source devel/setup.bash 
-roslaunch fast_lio 3_robots.launch
-
-roslaunch fast_lio robot_1.launch 
-roslaunch fast_lio robot_2.launch 
-roslaunch fast_lio robot_3.launch 
-```
-
-运行后端
-
-~~~bash
-source devel/setup.bash 
-roslaunch global_manager global_manager.launch 
-~~~
-
-运行回环
-
-~~~bash
-source devel/setup.bash 
-source ~/pyvenv/mr_slam_venv/bin/activate
-
-python src/RING_ros/main_SC.py 
-python src/RING_ros/main_RING.py 
-python src/RING_ros/main_RINGplusplus.py 
-~~~
-
-
-播放自制数据集
-
-~~~bash
-cd /media/eureka/Solid\ Disk/datasets/bags/
-~~~
-
-~~~bash
-rosbag play loop-22.bag /livox/imu:=/robot_1/imu /livox/lidar:=/robot_1/pointcloud --clock --pause -r 0.5
-rosbag play loop-30.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud --clock --pause -r 0.5
-rosbag play loop-31.bag /livox/imu:=/robot_3/imu /livox/lidar:=/robot_3/pointcloud --clock --pause -r 0.5
-~~~
-
-~~~bash
-rosbag play robot_1.bag /livox/imu:=/robot_1/imu /livox/lidar:=/robot_1/pointcloud --clock --pause -r 0.5
-rosbag play robot_2.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud --clock --pause -r 0.5
-rosbag play robot_3.bag /livox/imu:=/robot_3/imu /livox/lidar:=/robot_3/pointcloud --clock --pause -r 0.5
-~~~
-
-~~~bash
-rosbag play gazebo10.bag --clock --pause /velodyne_points:=/robot_1/pointcloud -r 0.5
-rosbag play gazebo11.bag --clock --pause /velodyne_points:=/robot_2/pointcloud -r 0.5
-
-rosbag play gazebo12.bag --clock --pause /velodyne_points:=/robot_1/pointcloud -r 0.5
-rosbag play gazebo13.bag --clock --pause /velodyne_points:=/robot_2/pointcloud -r 0.5
-
-~~~
-
-
-
-
-
-存储地图话题发布
-
-~~~bash
-rostopic pub /map_saving std_msgs/Bool "data: true" -1
-~~~
-
-### 检查
-
-rviz中显示.pcd点云的方式
-
-~~~bash
-rosrun pcl_ros pcd_to_pointcloud <path_to_pcd_file> <interval> _frame_id:=<坐标系>
-~~~
-
-~~~bash
-rosrun pcl_ros pcd_to_pointcloud globalMap.pcd 0.1 _frame_id:=map
-~~~
-
-pcl_viewer 查看点云
-
-~~~bash
-pcl_viewer <path_to_pcd_file>
-~~~
 
 
 
@@ -342,6 +347,10 @@ aloam前端
 
 ![image-20250514231448441](./assets/image-20250514231448441.png)
 
+![image-20250519202732448](./assets/image-20250519202732448.png)
+
+![image-20250519203002605](./assets/image-20250519203002605.png)
+
 ![image-20250514231641179](./assets/image-20250514231641179.png)
 
 ### gazebo仿真
@@ -374,3 +383,8 @@ aloam前端
 
 ![image-20250514021434437](./assets/image-20250514021434437.png)
 
+![image-20250519152008769](./assets/image-20250519152008769.png)
+
+![image-20250519153314420](./assets/image-20250519153314420.png)
+
+![image-20250519153341668](./assets/image-20250519153341668.png)
