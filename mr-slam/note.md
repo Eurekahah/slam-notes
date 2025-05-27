@@ -13,3 +13,7 @@ fastlio + multi agent loop detection
 aloam + multi agent loop detection
 
 ![image-20250422144602574](./assets/image-20250422144602574.png)
+
+## 回环
+
+https://claude.ai/chat/f4898b1d-442d-4375-983a-f131b052c97c

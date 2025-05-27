@@ -64,6 +64,10 @@ rosbag play gazebo13.bag --clock --pause /velodyne_points:=/robot_2/pointcloud -
 rosbag play gazebo20.bag --clock --pause /velodyne_points:=/robot_1/pointcloud -r 0.5
 rosbag play gazebo21.bag --clock --pause /velodyne_points:=/robot_2/pointcloud -r 0.5
 
+
+rosbag play gazebo30.bag --clock --pause /velodyne_points:=/robot_1/pointcloud -r 0.5
+
+
 ~~~
 
 
@@ -117,7 +121,6 @@ wget -O fftw.tar.gz http://fftw.org/fftw-3.3.10.tar.gz && tar -xvzf fftw.tar.gz 
     && cd fftw-3.3.10 && mkdir build && cd build && cmake .. \
     && make install -j8 
 
-
 wget -O ceres.tar.gz https://github.com/ceres-solver/ceres-solver/archive/refs/tags/1.14.0.tar.gz && tar -xvzf ceres.tar.gz \
     && cd ceres-solver-1.14.0 && mkdir build && cd build && cmake .. \
     && make install -j8 
@@ -165,9 +168,9 @@ python main_RINGplusplus.py
 
 
 
-## 实验结果
+# 实验结果
 
-### 1
+## 1
 
 数据集：mr_slam提供的数据集loop_22.bag,loop_30.bag,loop_31.bag
 
@@ -250,6 +253,8 @@ python main_RINGplusplus.py
 ![image-20250507200451657](./assets/image-20250507200451657.png)
 
 ![image-20250517232608481](./assets/image-20250517232608481.png)
+
+![image-20250514143832137](./assets/image-20250514143832137.png)
 
 ### 4 单机器人
 
@@ -353,38 +358,57 @@ aloam前端
 
 ![image-20250514231641179](./assets/image-20250514231641179.png)
 
-### gazebo仿真
+## gazebo仿真
 
-![image-20250514143832137](./assets/image-20250514143832137.png)
+
 
 单机器人aloam前端
 
-![image-20250514004732876](./assets/image-20250514004732876.png)
+<img src="./assets/image-20250514004732876.png" alt="image-20250514004732876" style="zoom: 25%;" /><img src="./assets/image-20250514010128636.png" alt="image-20250514010128636" style="zoom: 25%;" /><img src="./assets/image-20250514010205391.png" alt="image-20250514010205391" style="zoom: 25%;" /><img src="./assets/image-20250514010251759.png" alt="image-20250514010251759" style="zoom: 25%;" />
+
+<img src="./assets/image-20250514011332417.png" alt="image-20250514011332417" style="zoom: 50%;" />
 
 
 
 
 
-![image-20250514010128636](./assets/image-20250514010128636.png)
+<img src="./assets/image-20250514020924170.png" alt="image-20250514020924170" style="zoom:33%;" /><img src="./assets/image-20250514021403539.png" alt="image-20250514021403539" style="zoom:33%;" />
 
-![image-20250514010205391](./assets/image-20250514010205391.png)
+### 单机建图
 
-![image-20250514010251759](./assets/image-20250514010251759.png)
+前端aloam
 
-![image-20250514011332417](./assets/image-20250514011332417.png)
+<img src="./assets/image-20250519152008769.png" alt="image-20250519152008769" style="zoom:33%;" />
+
+### 多机建图：2个机器人
+
+前端aloam 回环RING ICP接受阈值为0.13
+
+<img src="./assets/image-20250519153314420.png" alt="image-20250519153314420" style="zoom:45%;" /><img src="./assets/image-20250519153341668.png" alt="image-20250519153341668" style="zoom:33%;" />
+
+前端aloam 回环RING++ ICP接受阈值为0.13
+
+<img src="./assets/image-20250526143238984.png" alt="image-20250526143238984" style="zoom:50%;" />
+
+ICP接受阈值降低到0.08 以及0.05
+<img src="./assets/image-20250526144034588.png" alt="image-20250526144034588" style="zoom: 33%;" /><img src="./assets/image-20250526145007337.png" alt="image-20250526145007337" style="zoom: 33%;" />
+
+前端aloam 回环ScanContext ICP接受阈值为0.13 ,以及ICP接受阈值调整为0.2和0.08
+
+<img src="./assets/image-20250526145826196.png" alt="image-20250526145826196" style="zoom:33%;" /><img src="./assets/image-20250526151538464.png" alt="image-20250526151538464" style="zoom:33%;" /><img src="./assets/image-20250526152558153.png" alt="image-20250526152558153" style="zoom:33%;" /><img src="./assets/image-20250526152625170.png" alt="image-20250526152625170" style="zoom:33%;" />
+
+### 多机建图：3个机器人
+
+前端aloam 回环RING
+
+<img src="./assets/image-20250526140524450.png" alt="image-20250526140524450" style="zoom:33%;" /><img src="./assets/image-20250526140613219.png" alt="image-20250526140613219" style="zoom:50%;" />
 
 
 
+## 建图效果
 
+<img src="./assets/image-20250526154813143.png" alt="image-20250526154813143" style="zoom:50%;" /><img src="./assets/image-20250526154905342.png" alt="image-20250526154905342" style="zoom:50%;" />
 
-![image-20250514020924170](./assets/image-20250514020924170.png)
+<img src="./assets/image-20250526155051350.png" alt="image-20250526155051350" style="zoom:30%;" /><img src="./assets/image-20250526155210147.png" alt="image-20250526155210147" style="zoom:33%;" />
 
-![image-20250514021403539](./assets/image-20250514021403539.png)
-
-![image-20250514021434437](./assets/image-20250514021434437.png)
-
-![image-20250519152008769](./assets/image-20250519152008769.png)
-
-![image-20250519153314420](./assets/image-20250519153314420.png)
-
-![image-20250519153341668](./assets/image-20250519153341668.png)
+![image-20250526155409620](./assets/image-20250526155409620.png)
