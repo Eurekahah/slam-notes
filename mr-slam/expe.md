@@ -63,11 +63,11 @@ rosbag play gazebo13.bag --clock --pause /velodyne_points:=/robot_2/pointcloud -
 
 rosbag play gazebo20.bag --clock --pause /velodyne_points:=/robot_1/pointcloud -r 0.5
 rosbag play gazebo21.bag --clock --pause /velodyne_points:=/robot_2/pointcloud -r 0.5
+rosbag play gazebo30.bag --clock --pause /velodyne_points:=/robot_3/pointcloud -r 0.5
 
-
-rosbag play gazebo30.bag --clock --pause /velodyne_points:=/robot_1/pointcloud -r 0.5
-
-
+rosbag play gazebo20.bag --clock --pause /velodyne_points:=/robot_1/pointcloud /imu:=/robot_1/imu
+rosbag play gazebo21.bag --clock --pause /velodyne_points:=/robot_2/pointcloud /imu:=/robot_2/imu
+rosbag play gazebo30.bag --clock --pause /velodyne_points:=/robot_3/pointcloud /imu:=/robot_3/imu
 ~~~
 
 
@@ -97,6 +97,38 @@ pcl_viewer 查看点云
 ~~~bash
 pcl_viewer <path_to_pcd_file>
 ~~~
+
+### 评估
+
+1. ground_truth 获取
+   ~~~bash
+   python bag2tum.py
+   ~~~
+
+   得到ground_truth.txt后移动到full_graph.g2o的位置
+   ~~~bash
+   cp ground_truth.txt ~/code/mr_slam/src/MR_SLAM/Mapping/src/global_manager/log/
+   ~~~
+   
+   
+   
+2. 估计位姿转换为tum
+   ~~~bash
+   python g2o2tum.py
+   ~~~
+
+3. 估计位姿与ground_truth对齐
+   ~~~bash
+   python align_traj.py
+   ~~~
+
+4. evo评估
+   ~~~bash
+   # 使用odom作为参考的评估
+   evo_ape tum ground_truth.txt estimated_aligned.txt --align --correct_scale --plot >> calc_res.txt
+   ~~~
+
+   
 
 # 安装
 
@@ -378,7 +410,17 @@ aloam前端
 
 前端aloam
 
+gazebo21
+
 <img src="./assets/image-20250519152008769.png" alt="image-20250519152008769" style="zoom:33%;" />
+
+gazebo20
+
+![image-20250601124305493](./assets/image-20250601124305493.png)
+
+gazebo30
+
+![image-20250601125506272](./assets/image-20250601125506272.png)
 
 ### 多机建图：2个机器人
 
@@ -412,3 +454,17 @@ ICP接受阈值降低到0.08 以及0.05
 <img src="./assets/image-20250526155051350.png" alt="image-20250526155051350" style="zoom:30%;" /><img src="./assets/image-20250526155210147.png" alt="image-20250526155210147" style="zoom:33%;" />
 
 ![image-20250526155409620](./assets/image-20250526155409620.png)
+
+![image-20250601174548663](./assets/image-20250601174548663.png)
+
+
+
+### 评估结果
+
+fastlio + gazebo20
+
+![image-20250601153230028](./assets/image-20250601153230028.png)
+
+fastlio + gazebo21
+
+![image-20250601152111784](./assets/image-20250601152111784.png)
