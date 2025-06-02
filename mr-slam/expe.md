@@ -43,7 +43,7 @@ cd /media/eureka/Solid\ Disk/datasets/bags/
 ~~~
 
 ~~~bash
-rosbag play loop-22.bag /livox/imu:=/robot_1/imu /livox/lidar:=/robot_1/pointcloud --clock --pause -r 0.5
+
 rosbag play loop-30.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud --clock --pause -r 0.5
 rosbag play loop-31.bag /livox/imu:=/robot_3/imu /livox/lidar:=/robot_3/pointcloud --clock --pause -r 0.5
 ~~~
@@ -52,6 +52,10 @@ rosbag play loop-31.bag /livox/imu:=/robot_3/imu /livox/lidar:=/robot_3/pointclo
 rosbag play robot_1.bag /livox/imu:=/robot_1/imu /livox/lidar:=/robot_1/pointcloud --clock --pause -r 0.5
 rosbag play robot_2.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud --clock --pause -r 0.5
 rosbag play robot_3.bag /livox/imu:=/robot_3/imu /livox/lidar:=/robot_3/pointcloud --clock --pause -r 0.5
+
+rosbag play robot_1.bag /livox/imu:=/robot_1/imu /livox/lidar:=/robot_1/pointcloud /livox/imu:=/robot_1/imu --clock --pause -r 0.5
+rosbag play robot_2.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud /livox/imu:=/robot_2/imu --clock --pause -r 0.5
+rosbag play robot_3.bag /livox/imu:=/robot_3/imu /livox/lidar:=/robot_3/pointcloud /livox/imu:=/robot_3/imu --clock --pause -r 0.5
 ~~~
 
 ~~~bash
@@ -197,6 +201,18 @@ cd src/RING_ros
 python main_RING.py
 
 python main_RINGplusplus.py
+
+
+
+
+
+## 安装Costmap
+
+需要安装
+
+~~~bash
+sudo apt install ros-noetic-navigation
+~~~
 
 
 
@@ -390,6 +406,16 @@ aloam前端
 
 ![image-20250514231641179](./assets/image-20250514231641179.png)
 
+
+
+
+
+fastlio前端
+
+![image-20250602235614072](./assets/image-20250602235614072.png)
+
+
+
 ## gazebo仿真
 
 
@@ -468,3 +494,15 @@ fastlio + gazebo20
 fastlio + gazebo21
 
 ![image-20250601152111784](./assets/image-20250601152111784.png)
+
+
+
+
+
+## costmap
+
+fastlio前端的局部costmap效果
+
+![image-20250602232418920](./assets/image-20250602232418920.png)
+
+![image-20250602232810721](./assets/image-20250602232810721.png)
