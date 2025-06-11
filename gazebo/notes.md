@@ -30,7 +30,7 @@ roslaunch openpcdet 3d_object_detector.launch
 roslaunch lego_loam run.launch
 ```
 
-
+rosrun topic_tools throttle messages /imu 100.0
 
 # 安装
 

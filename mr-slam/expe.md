@@ -49,13 +49,13 @@ rosbag play loop-31.bag /livox/imu:=/robot_3/imu /livox/lidar:=/robot_3/pointclo
 ~~~
 
 ~~~bash
-rosbag play robot_1.bag /livox/imu:=/robot_1/imu /livox/lidar:=/robot_1/pointcloud --clock --pause -r 0.5
-rosbag play robot_2.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud --clock --pause -r 0.5
-rosbag play robot_3.bag /livox/imu:=/robot_3/imu /livox/lidar:=/robot_3/pointcloud --clock --pause -r 0.5
+rosbag play robot_1.bag /livox/imu:=/robot_1/imu /livox/lidar:=/robot_1/pointcloud --clock --pause
+rosbag play robot_2.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud --clock --pause
+rosbag play robot_3.bag /livox/imu:=/robot_3/imu /livox/lidar:=/robot_3/pointcloud --clock --pause
 
-rosbag play robot_1.bag /livox/imu:=/robot_1/imu /livox/lidar:=/robot_1/pointcloud /livox/imu:=/robot_1/imu --clock --pause -r 0.5
-rosbag play robot_2.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud /livox/imu:=/robot_2/imu --clock --pause -r 0.5
-rosbag play robot_3.bag /livox/imu:=/robot_3/imu /livox/lidar:=/robot_3/pointcloud /livox/imu:=/robot_3/imu --clock --pause -r 0.5
+rosbag play robot_1.bag /livox/imu:=/robot_1/imu /livox/lidar:=/robot_1/pointcloud --clock --pause -r 0.5
+rosbag play robot_2.bag /livox/imu:=/robot_2/imu /livox/lidar:=/robot_2/pointcloud  --clock --pause -r 0.5
+rosbag play robot_3.bag /livox/imu:=/robot_3/imu /livox/lidar:=/robot_3/pointcloud --clock --pause -r 0.5
 ~~~
 
 ~~~bash
@@ -72,6 +72,12 @@ rosbag play gazebo30.bag --clock --pause /velodyne_points:=/robot_3/pointcloud -
 rosbag play gazebo20.bag --clock --pause /velodyne_points:=/robot_1/pointcloud /imu:=/robot_1/imu
 rosbag play gazebo21.bag --clock --pause /velodyne_points:=/robot_2/pointcloud /imu:=/robot_2/imu
 rosbag play gazebo30.bag --clock --pause /velodyne_points:=/robot_3/pointcloud /imu:=/robot_3/imu
+
+rosbag play gazebo40.bag --clock --pause /velodyne_points:=/robot_1/pointcloud /imu:=/robot_1/imu
+
+rosbag play gazebo41.bag --clock --pause /velodyne_points:=/robot_1/pointcloud /imu:=/robot_1/imu
+
+rosbag play gazebo42.bag --clock --pause /velodyne_points:=/robot_1/pointcloud /imu_throttle:=/robot_1/imu
 ~~~
 
 
@@ -471,7 +477,13 @@ ICP接受阈值降低到0.08 以及0.05
 
 <img src="./assets/image-20250526140524450.png" alt="image-20250526140524450" style="zoom:33%;" /><img src="./assets/image-20250526140613219.png" alt="image-20250526140613219" style="zoom:50%;" />
 
+前端aloam 回环RING 成功的一次
 
+![image-20250610213135424](./assets/image-20250610213135424.png)
+
+![image-20250610213301147](./assets/image-20250610213301147.png)
+
+![image-20250610213712305](./assets/image-20250610213712305.png)
 
 ## 建图效果
 
